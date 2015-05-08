@@ -6,6 +6,15 @@ uniform mat4 inverseModel, inverseView, inverseProjection;
 uniform vec3 ambient, diffuse, specular, lightDirection;
 uniform float shininess;
 
+varying vec3 fragNormal, fragPosition;
+
 void main() {
-  gl_Position = vec4(position, 1);
+
+  vec4 viewPosition = view * model * vec4(position, 1.0);
+  vec4 viewNormal = vec4(normal, 0.0) * inverseModel * inverseView;
+
+  gl_Position = projection * viewPosition;
+
+  fragNormal = viewNormal.xyz;
+  fragPosition = viewPosition.xyz;
 }
