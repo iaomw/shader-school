@@ -15,6 +15,13 @@ uniform vec3 diffuse;
 uniform vec3 lightDirection;
 uniform float numBands;
 
+varying vec3 fragNormal;
+
 void main() {
-  gl_Position = vec4(position,1);
+
+  gl_Position = projection*view*model*vec4(position, 1);
+
+  vec4 iNormal = vec4(normal, 0)*inverseModel;
+
+  fragNormal = iNormal.xyz;
 }
